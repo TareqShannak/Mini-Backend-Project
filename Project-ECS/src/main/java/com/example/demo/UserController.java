@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entities.Resource;
 import com.example.demo.services.ResourceService;
+import com.example.demo.services.UserService;
 
 @RestController
 public class UserController {
 	
-//	@Autowired
-//	UserService userService;
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	ResourceService resourceService;
@@ -37,6 +38,6 @@ public class UserController {
 	
 	@GetMapping("/resources")
 	public List<Resource> getMyResources(@RequestParam String email){
-		return resourceService.retrieveResources(email);
+		return userService.retrieveResources(email);
 	}
 }

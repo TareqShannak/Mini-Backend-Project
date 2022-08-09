@@ -8,30 +8,19 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Resource;
 import com.example.demo.entities.User;
-import com.example.demo.repositories.ContractRepository;
-import com.example.demo.repositories.ResourceRepository;
 import com.example.demo.repositories.UserRepository;
 
 @Service
-public class ResourceService {
-
-	@Autowired
-	ResourceRepository resourceRepository;
+public class UserService {
 
 	@Autowired
 	UserRepository userRepository;
-
-	@Autowired
-	ContractRepository contractRepository;
-
-	public List<Resource> allResources() {
-
+	
+	public List<Resource> retrieveResources(String email) {
+		User user = userRepository.findByEmail(email).get(0);
 		List<Resource> result = new ArrayList<Resource>();
-		for (Resource resource : resourceRepository.findAll())
+		for (Resource resource : user.getResources())
 			result.add(resource);
 		return result;
 	}
-
-
-
 }
