@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entities.Resource;
@@ -29,8 +30,13 @@ public class UserController {
 		return "Register User!";
 	}
 	
-	@GetMapping("/resources")
+	@GetMapping("/all/resources")
 	public List<Resource> getAllResources(){
 		return resourceService.allResources();
+	}
+	
+	@GetMapping("/resources")
+	public List<Resource> getMyResources(@RequestParam String email){
+		return resourceService.retrieveResources(email);
 	}
 }
