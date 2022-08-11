@@ -16,6 +16,10 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 	
+	public Boolean validateLogin(String name, String pass) {
+		return name.equalsIgnoreCase("TareqShannak") && pass.equalsIgnoreCase("0000");
+	}
+	
 	public List<Resource> retrieveResources(String email) {
 		User user = userRepository.findByEmail(email).get(0);
 		List<Resource> result = new ArrayList<Resource>();
