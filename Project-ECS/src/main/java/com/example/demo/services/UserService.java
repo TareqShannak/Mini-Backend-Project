@@ -20,7 +20,15 @@ public class UserService {
 		return name.equalsIgnoreCase("TareqShannak") && pass.equalsIgnoreCase("0000");
 	}
 	
+	public List<User> getAllUsers(){
+		return userRepository.findAll();
+	}
+	
 	public User findUserByEmail(String email) {
 		return userRepository.findByEmail(email);
+	}
+	
+	public void addUser(User user) {
+		userRepository.save(user);
 	}
 }

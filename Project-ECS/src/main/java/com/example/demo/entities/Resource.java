@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "employee")
 public class Resource {
@@ -29,9 +31,11 @@ public class Resource {
 	private Date hireDate;
 
 	@ManyToMany(mappedBy = "resources", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private Set<User> users;
 
 	@OneToMany
+	@JsonIgnore
 	private Set<Contract> contracts = new HashSet<Contract>();
 
 	public Resource() {

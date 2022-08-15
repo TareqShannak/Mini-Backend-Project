@@ -19,13 +19,11 @@ public class ResourceService {
 	ResourceRepository resourceRepository;
 
 	public List<Resource> allResources() {
-
-		return (List<Resource>) resourceRepository.findAll();
-//		List<Resource> result = new ArrayList<Resource>();
-//		Iterable<Resource> resources = resourceRepository.findAll();
-//		for (Resource resource : resources)
-//			result.add(resource);
-//		return result;
+		return resourceRepository.findAll();
+	}
+	
+	public Resource getResourceById(Integer id) {
+		return resourceRepository.findById(id.longValue()).get();
 	}
 
 	public List<Resource> retrieveMyResources(String email) {

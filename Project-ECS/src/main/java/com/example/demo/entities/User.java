@@ -32,7 +32,10 @@ public class User {
 	@Column(name = "pass")
 	private String password;
 
+	//@Column(nullable = false)
+	@Column(name = "company_name", length = 20, nullable = false)
 	private String companyName;
+	
 	@Temporal(TemporalType.DATE)
 	private Date contractDate;
 
