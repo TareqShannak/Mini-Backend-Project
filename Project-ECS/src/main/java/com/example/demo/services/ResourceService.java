@@ -18,20 +18,19 @@ public class ResourceService {
 	@Autowired
 	ResourceRepository resourceRepository;
 
-	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	ContractRepository contractRepository;
-
 	public List<Resource> allResources() {
 
-		List<Resource> result = new ArrayList<Resource>();
-		for (Resource resource : resourceRepository.findAll())
-			result.add(resource);
-		return result;
+		return (List<Resource>) resourceRepository.findAll();
+//		List<Resource> result = new ArrayList<Resource>();
+//		Iterable<Resource> resources = resourceRepository.findAll();
+//		for (Resource resource : resources)
+//			result.add(resource);
+//		return result;
 	}
 
+	public List<Resource> retrieveMyResources(String email) {
+		return resourceRepository.findByEmail(email);
 
+	}
 
 }

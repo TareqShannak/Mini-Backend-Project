@@ -20,11 +20,7 @@ public class UserService {
 		return name.equalsIgnoreCase("TareqShannak") && pass.equalsIgnoreCase("0000");
 	}
 	
-	public List<Resource> retrieveResources(String email) {
-		User user = userRepository.findByEmail(email).get(0);
-		List<Resource> result = new ArrayList<Resource>();
-		for (Resource resource : user.getResources())
-			result.add(resource);
-		return result;
+	public User findUserByEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
 }

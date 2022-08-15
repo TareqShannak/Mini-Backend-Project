@@ -59,34 +59,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authenticated();
 	}
 
-//	@Override
-//	@Bean
-//	protected UserDetailsService userDetailsService() {
-//		UserDetails annaSmithUser = User.builder()
-//				.username("annasmith")
-//				.password(passwordEncoder.encode("password"))
-//				//.roles(ApplicationUserRole.STUDENT.name())		//ROLE_STUDENT
-//				.authorities(ApplicationUserRole.STUDENT.getGrantedAuthorities())
-//				.build();
-//		
-//		UserDetails lindaUser = User.builder()
-//				.username("linda")
-//				.password(passwordEncoder.encode("password123"))
-//				//.roles(ApplicationUserRole.ADMIN.name())		//ROLE_ADMIN
-//				.authorities(ApplicationUserRole.ADMIN.getGrantedAuthorities())
-//				.build();
-//		
-//		UserDetails tomUser = User.builder()
-//				.username("tom")
-//				.password(passwordEncoder.encode("password123"))
-//				//.roles(ApplicationUserRole.ADMINTRAINEE.name())	//ROLE_ADMINTRAINEE
-//				.authorities(ApplicationUserRole.ADMINTRAINEE.getGrantedAuthorities())
-//				.build();
-//		
-//		return new InMemoryUserDetailsManager(annaSmithUser, lindaUser, tomUser);	//ROLE_ADMINTRAINEE
-//	}
-
-
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(daoAuthenticationProvider());

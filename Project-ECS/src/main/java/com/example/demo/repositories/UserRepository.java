@@ -8,6 +8,7 @@ import com.example.demo.entities.User;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 	
-	public List<User> findByEmail(String email);
+	public User findByEmail(String email);
+	
 
 }

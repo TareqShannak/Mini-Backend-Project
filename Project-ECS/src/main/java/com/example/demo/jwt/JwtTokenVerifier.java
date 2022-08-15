@@ -31,7 +31,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter{
 	private final JwtConfig jwtConfig;
 	private final SecretKey secretKey;
 	
-	
+	public static String username;
 
 	public JwtTokenVerifier(JwtConfig jwtConfig, SecretKey secretKey) {
 		super();
@@ -60,7 +60,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter{
 										.setSigningKey(secretKey)
 										.parseClaimsJws(token);
 			Claims body = claimsJws.getBody();
-			String username = body.getSubject();
+			username = body.getSubject();
 			
 			List<Map<String, String>> authorities = (List<Map<String, String>>) body.get("authorities");
 			

@@ -32,11 +32,10 @@ public class Resource {
 	private Set<User> users;
 
 	@OneToMany
-	private Set<Contract> contracts;
+	private Set<Contract> contracts = new HashSet<Contract>();
 
 	public Resource() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Resource(Long id, String email, Date hireDate) {
