@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -37,6 +38,10 @@ public class Resource {
 	@OneToMany
 	@JsonIgnore
 	private Set<Contract> contracts = new HashSet<Contract>();
+	
+	@OneToMany(mappedBy = "resource", cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+	@JsonIgnore
+	private Set<Feedback> feedbacks = new HashSet<Feedback>();
 
 	public Resource() {
 		super();
@@ -95,6 +100,22 @@ public class Resource {
 				users = new HashSet<User>();
 			users.add(user);
 		}
+	}
+
+	public void addFeedback(Feedback feedback) {
+		if (feedback != null) {
+			if (feedbacks == null)
+				feedbacks = new HashSet<Feedback>();
+			feedbacks.add(feedback);
+		}
+	}
+	
+	public Set<Feedback> getFeedbacks() {
+		return feedbacks;
+	}
+
+	public void setFeedbacks(Set<Feedback> feedbacks) {
+		this.feedbacks = feedbacks;
 	}
 
 	@Override
