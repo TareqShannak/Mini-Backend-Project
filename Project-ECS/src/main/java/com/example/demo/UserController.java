@@ -5,12 +5,12 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entities.Feedback;
@@ -69,15 +69,24 @@ public class UserController {
 	
 	//TODO: feedback text must be @RequestBody
 	
+//	@PostMapping(path = "/feedback/{resourceId}")
+//	@PreAuthorize("hasAuthority('feedback:write')")
+//	public void addFeedback(@PathVariable("resourceId") Integer resourceId, @RequestParam(value = "feedback") String feedback) {
+//		Feedback node = new Feedback();
+//		node.setText(feedback);
+//		Resource resource = resourceService.getResourceById(resourceId);
+//		resource.addFeedback(node);
+//		node.setResource(resource);
+//		feedbackService.saveFeedback(node);
+//	}
+	
 	@PostMapping(path = "/feedback/{resourceId}")
 	@PreAuthorize("hasAuthority('feedback:write')")
-	public void addFeedback(@PathVariable("resourceId") Integer resourceId, @RequestParam(value = "feedback") String feedback) {
-		Feedback node = new Feedback();
-		node.setText(feedback);
+	public void addFeedback(@PathVariable("resourceId") Integer resourceId, @RequestBody Feedback feedback) {
 		Resource resource = resourceService.getResourceById(resourceId);
-		resource.addFeedback(node);
-		node.setResource(resource);
-		feedbackService.saveFeedback(node);
+		resource.addFeedback(feedback);
+		feedback.setResource(resource);
+		feedbackService.saveFeedback(feedback);
 	}
 	
 
