@@ -42,16 +42,6 @@ public class UserController {
 //	private static final List<Resource> Resources = Arrays.asList(new Resource(1L, "oQattoush@gmail.com", new Date()),
 //			new Resource(2L, "mHafez@gmail.com", new Date()), new Resource(3L, "wSayara@gmail.com", new Date()));
 	
-	@PostMapping("/login")
-	public String login() {
-		return "login";
-	}
-
-	@PostMapping("/signup")
-	public void signupUser(@RequestBody User newUser) {
-		userService.addUser(newUser);
-	}
-	
 	@GetMapping("/resources")
 	@PreAuthorize("hasAuthority('resource:write')")
 	public List<Resource> getAllResources() {
@@ -70,6 +60,11 @@ public class UserController {
 		return userService.findUserByEmail(JwtTokenVerifier.username).getResources();
 	}
 	
+	@GetMapping("/client_info")
+	@PreAuthorize("hasAuthority('feedback:write')")
+	public User getUserInfo() {
+		return userService.findUserByEmail(JwtTokenVerifier.username);
+	}
 	
 	
 	//TODO: feedback text must be @RequestBody

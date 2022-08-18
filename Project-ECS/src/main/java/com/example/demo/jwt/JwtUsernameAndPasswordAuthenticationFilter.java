@@ -85,8 +85,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 //				+ "\"contractDate\" : \"" + user.getContractDate() + "\""
 //				+ " }";
 		String objectToReturn = "{ "
-								+ "\"tokens\" : \"" + jwtConfig.getTokenPrefix() + token + "\",\n"
-								+ "\"username\" : \"" + authResult.getName()+ "\""
+								+ "\"tokens\" : \"" + jwtConfig.getTokenPrefix() + token + "\""
 								+ " }";
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

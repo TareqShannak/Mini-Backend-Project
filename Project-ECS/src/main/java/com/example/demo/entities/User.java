@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "customer")
 public class User {
@@ -44,6 +46,7 @@ public class User {
 	private Set<Resource> resources;
 
 	@OneToMany
+	@JsonIgnore
 	private Set<Contract> contracts;
 
 	public User() {

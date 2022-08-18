@@ -55,7 +55,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 				.addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
 				.addFilterAfter(new JwtTokenVerifier(jwtConfig, secretKey), JwtUsernameAndPasswordAuthenticationFilter.class)
 				.authorizeRequests()
-				.antMatchers("/", "/index", "/css/*", "/js/*", "/v2/api-docs", "/swagger-ui.html", "/swagger-resources/**", "/webjars/**").permitAll()
+				.antMatchers("/", "/index", "/css/*", "/js/*", "/v2/api-docs", "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/signup").permitAll()
+				.antMatchers(HttpMethod.OPTIONS,"/**").permitAll() //allow CORS option calls
 				.antMatchers("/api/**").hasRole(ApplicationUserRole.USER.name())
 				.anyRequest()
 				.authenticated();
