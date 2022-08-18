@@ -1,9 +1,9 @@
 package com.example.demo.security;
 
+import static com.example.demo.security.ApplicationUserPermission.FEEDBACK_WRITE;
 import static com.example.demo.security.ApplicationUserPermission.RESOURCE_READ;
 import static com.example.demo.security.ApplicationUserPermission.RESOURCE_WRITE;
 import static com.example.demo.security.ApplicationUserPermission.USER_READ;
-import static com.example.demo.security.ApplicationUserPermission.FEEDBACK_WRITE;
 
 import java.util.Set;
 import java.util.stream.Collectors;

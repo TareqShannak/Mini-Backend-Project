@@ -18,6 +18,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.example.demo.entities.User;
 import com.google.common.base.Strings;
 
 import io.jsonwebtoken.Claims;
@@ -71,10 +72,15 @@ public class JwtTokenVerifier extends OncePerRequestFilter{
 			Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, simpleGrantedAuthorities);
 			
 			SecurityContextHolder.getContext().setAuthentication(authentication);
+	
 			
 		} catch(JwtException e){
 			throw new IllegalStateException(String.format("Token %s Can't Be trusted", token));
 		}
+		
+		
+		
+		
 		
 		filterChain.doFilter(request, response);
 		

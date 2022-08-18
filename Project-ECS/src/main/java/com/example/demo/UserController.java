@@ -21,8 +21,12 @@ import com.example.demo.services.FeedbackService;
 import com.example.demo.services.ResourceService;
 import com.example.demo.services.UserService;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+
 @RestController
 @RequestMapping("api/v1")
+@EnableSwagger2
 public class UserController {
 
 	@Autowired
@@ -37,6 +41,11 @@ public class UserController {
 //	For TESTING:
 //	private static final List<Resource> Resources = Arrays.asList(new Resource(1L, "oQattoush@gmail.com", new Date()),
 //			new Resource(2L, "mHafez@gmail.com", new Date()), new Resource(3L, "wSayara@gmail.com", new Date()));
+	
+	@PostMapping("/login")
+	public String login() {
+		return "login";
+	}
 
 	@PostMapping("/signup")
 	public void signupUser(@RequestBody User newUser) {
@@ -59,7 +68,11 @@ public class UserController {
 	@PreAuthorize("hasAuthority('resource:read')")
 	public Set<Resource> getMyResources() {
 		return userService.findUserByEmail(JwtTokenVerifier.username).getResources();
-	}	
+	}
+	
+	
+	
+	//TODO: feedback text must be @RequestBody
 	
 	@PostMapping(path = "/feedback/{resourceId}")
 	@PreAuthorize("hasAuthority('feedback:write')")
@@ -71,5 +84,6 @@ public class UserController {
 		node.setResource(resource);
 		feedbackService.saveFeedback(node);
 	}
+	
 
 }
