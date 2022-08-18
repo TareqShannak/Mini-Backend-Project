@@ -1,11 +1,15 @@
 package com.example.demo.entities;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Feedback {
@@ -13,24 +17,26 @@ public class Feedback {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String text;
-	
+
+	@Temporal(TemporalType.DATE)
+	private Date publishedDate;
+
 	@ManyToOne
 	@JoinColumn(name = "employee_id")
 	private Resource resource;
-	
-	
 
 	public Feedback() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Feedback(Long id, String text, Resource resource) {
+	public Feedback(Long id, String text, Date publishedDate, Resource resource) {
 		super();
 		this.id = id;
 		this.text = text;
+		this.publishedDate = publishedDate;
 		this.resource = resource;
 	}
 
@@ -57,6 +63,19 @@ public class Feedback {
 	public void setResource(Resource resource) {
 		this.resource = resource;
 	}
-	
-	
+
+	public Date getPublishedDate() {
+		return publishedDate;
+	}
+
+	public void setPublishedDate(Date publishedDate) {
+		this.publishedDate = publishedDate;
+	}
+
+	@Override
+	public String toString() {
+		return "Feedback [id=" + id + ", text=" + text + ", publishedDate=" + publishedDate + ", resource=" + resource
+				+ "]";
+	}
+
 }
