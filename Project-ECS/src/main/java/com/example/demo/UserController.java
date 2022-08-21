@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,20 +65,6 @@ public class UserController {
 	public User getUserInfo() {
 		return userService.findUserByEmail(JwtTokenVerifier.username);
 	}
-	
-	
-	//TODO: feedback text must be @RequestBody
-	
-//	@PostMapping(path = "/feedback/{resourceId}")
-//	@PreAuthorize("hasAuthority('feedback:write')")
-//	public void addFeedback(@PathVariable("resourceId") Integer resourceId, @RequestParam(value = "feedback") String feedback) {
-//		Feedback node = new Feedback();
-//		node.setText(feedback);
-//		Resource resource = resourceService.getResourceById(resourceId);
-//		resource.addFeedback(node);
-//		node.setResource(resource);
-//		feedbackService.saveFeedback(node);
-//	}
 	
 	@PostMapping(path = "/feedback/{resourceId}")
 	@PreAuthorize("hasAuthority('feedback:write')")
