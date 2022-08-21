@@ -13,6 +13,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Feedback {
 
@@ -24,6 +26,7 @@ public class Feedback {
 
 	@Temporal(TemporalType.DATE)
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date publishedDate;
 
 	@ManyToOne

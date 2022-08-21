@@ -13,6 +13,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Contract {
 
@@ -24,9 +26,11 @@ public class Contract {
 
 	@Temporal(TemporalType.DATE)
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date startDate;
 
 	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date endDate;
 
 	@JoinColumn(name = "employee_id")

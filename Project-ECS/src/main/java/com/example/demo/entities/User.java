@@ -21,6 +21,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -41,6 +42,7 @@ public class User {
 	
 	@Temporal(TemporalType.DATE)
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date contractDate;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
