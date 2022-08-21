@@ -1,9 +1,10 @@
 package com.example.demo.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.entities.Contract;
+import com.example.demo.entities.User;
 
-public interface ContractRepository extends CrudRepository<Contract, Long> {
+public interface ContractRepository extends JpaRepository<Contract, Long> {
 
 }

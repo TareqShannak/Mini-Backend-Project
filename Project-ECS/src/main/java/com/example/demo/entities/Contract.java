@@ -85,6 +85,8 @@ public class Contract {
 		this.user = user;
 	}
 
+	
+	
 	@Override
 	public String toString() {
 		return "Contract [id=" + id + ", position=" + position + ", startDate=" + startDate + ", endDate=" + endDate

@@ -18,10 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -38,7 +36,6 @@ public class User {
 	@Column(name = "pass")
 	private String password;
 
-	//@Column(nullable = false)
 	@Column(name = "company_name", length = 20, nullable = false)
 	private String companyName;
 	
@@ -50,7 +47,7 @@ public class User {
 	@JoinTable(name = "customers_employees", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
 	private Set<Resource> resources;
 
-	@OneToMany
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch= FetchType.EAGER)
 	@JsonIgnore
 	private Set<Contract> contracts;
 
