@@ -68,6 +68,17 @@ public class UserController {
 			currentResources.add(contract.getResource());
 		return currentResources;
 	}
+	
+	@GetMapping("/my_finished_resources")
+	@PreAuthorize("hasAuthority('resource:read')")
+	public List<Resource> getMyFinishedResources() {
+		Set<Contract> contracts = userService.findUserByEmail(JwtTokenVerifier.username).getContracts();
+		List<Resource> currentResources = new ArrayList<>();
+		for (Contract contract : contracts.stream().filter(c -> c.getEndDate().before(new Date()))
+				.collect(Collectors.toList()))
+			currentResources.add(contract.getResource());
+		return currentResources;
+	}
 
 	@GetMapping("/client_info")
 	@PreAuthorize("hasAuthority('feedback:write')")
