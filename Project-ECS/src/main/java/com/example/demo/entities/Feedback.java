@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 public class Feedback {
 
@@ -21,6 +23,7 @@ public class Feedback {
 	private String text;
 
 	@Temporal(TemporalType.DATE)
+	@CreationTimestamp
 	private Date publishedDate;
 
 	@ManyToOne
