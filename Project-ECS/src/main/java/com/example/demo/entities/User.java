@@ -47,6 +47,7 @@ public class User {
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "customers_employees", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
+	@JsonIgnore
 	private Set<Resource> resources;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch= FetchType.EAGER)
