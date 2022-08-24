@@ -57,6 +57,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/", "/index", "/css/*", "/js/*", "/v2/api-docs", "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/signup").permitAll()
 				.antMatchers(HttpMethod.OPTIONS,"/**").permitAll() //allow CORS option calls
 				.antMatchers("/api/**").hasRole(ApplicationUserRole.USER.name())
+				.antMatchers("/**").hasRole(ApplicationUserRole.ADMIN.name())
 				.anyRequest()
 				.authenticated();
 		

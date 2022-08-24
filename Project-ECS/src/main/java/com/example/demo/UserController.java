@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -137,5 +138,13 @@ public class UserController {
 		//Must Return not OK in HTTP Response
 		return null;
 	}
-
+	
+	@PostMapping("/edit_profile")
+	@PreAuthorize("hasAuthority('feedback:write')")
+	public void editUser(@RequestBody User user) {
+		User newUser = userService.findUserByEmail(JwtTokenVerifier.username);
+		newUser.setCompanyName(user.getCompanyName());
+		
+		userService.saveUser(newUser);	
+	}
 }

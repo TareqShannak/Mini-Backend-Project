@@ -20,4 +20,8 @@ public class ContractService {
 		return contractRepository.findById(id.longValue()).get();
 	}
 	
+	public void deleteContractById(Long id) {
+		contractRepository.deleteById(id);
+	}
+	
 }

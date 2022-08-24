@@ -41,14 +41,7 @@ public class FakeApplicationUserDaoService implements ApplicationUserDao {
 		for(User user: userService.getAllUsers()) {
 			applicationusers.add(new ApplicationUser(user.getEmail(), user.getPassword(), ApplicationUserRole.USER.getGrantedAuthorities(), true, true, true, true));
 		}
-		
-//		List<ApplicationUser> applicationusers = Lists.newArrayList(
-//				new ApplicationUser("tareq", passwordEncoder.encode("password"),
-//						ApplicationUserRole.USER.getGrantedAuthorities(), true, true, true, true),
-//				new ApplicationUser("anas", passwordEncoder.encode("password"),
-//						ApplicationUserRole.USER.getGrantedAuthorities(), true, true, true, true),
-//				new ApplicationUser("wisam", passwordEncoder.encode("password123"),
-//						ApplicationUserRole.ADMIN.getGrantedAuthorities(), true, true, true, true));
+		applicationusers.add(new ApplicationUser("a@b.c", passwordEncoder.encode("admin"), ApplicationUserRole.ADMIN.getGrantedAuthorities(), true, true, true, true));
 
 		return applicationusers;
 

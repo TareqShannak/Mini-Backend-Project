@@ -7,4 +7,5 @@ import com.example.demo.entities.User;
 
 public interface ContractRepository extends JpaRepository<Contract, Long> {
 
+	public void deleteById(Long id);
 }

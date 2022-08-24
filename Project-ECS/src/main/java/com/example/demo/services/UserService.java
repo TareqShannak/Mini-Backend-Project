@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.entities.Feedback;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
 
@@ -26,7 +27,19 @@ public class UserService {
 		return userRepository.findByEmail(email);
 	}
 	
+	public User findUserById(Long id) {
+		return userRepository.findById(id).get();
+	}
+	
 	public void addUser(User user) {
 		userRepository.save(user);
+	}
+	
+	public void saveUser(User user) {
+		userRepository.save(user);
+	}
+	
+	public void deleteUserById(Long id) {
+		userRepository.deleteById(id);
 	}
 }
