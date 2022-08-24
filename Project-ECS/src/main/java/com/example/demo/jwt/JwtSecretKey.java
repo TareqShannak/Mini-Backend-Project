@@ -2,7 +2,6 @@ package com.example.demo.jwt;
 
 import javax.crypto.SecretKey;
 
-import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

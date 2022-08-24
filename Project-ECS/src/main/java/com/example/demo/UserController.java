@@ -103,15 +103,6 @@ public class UserController {
 		return userService.findUserByEmail(JwtTokenVerifier.username);
 	}
 
-	@PostMapping("/feedback/{resourceId}")
-	@PreAuthorize("hasAuthority('feedback:write')")
-	public void addFeedback(@PathVariable("resourceId") Integer resourceId, @RequestBody Feedback feedback) {
-		Resource resource = resourceService.getResourceById(resourceId);
-		resource.addFeedback(feedback);
-		feedback.setResource(resource);
-		feedbackService.saveFeedback(feedback);
-	}
-
 	@PutMapping("/my_contracts/{contractId}")
 	@PreAuthorize("hasAuthority('resource:read')")
 	public void editContract(@PathVariable("contractId") Integer contractId, @RequestBody Contract contract) {
@@ -119,6 +110,32 @@ public class UserController {
 		newContract.setPosition(contract.getPosition());
 		newContract.setEndDate(contract.getEndDate());
 		contractService.saveContract(newContract);
+	}
+	
+	@PostMapping("/add_feedback/{resourceId}")
+	@PreAuthorize("hasAuthority('feedback:write')")
+	public void addFeedback(@PathVariable("resourceId") Integer resourceId, @RequestBody Feedback feedback) {
+		Resource resource = resourceService.getResourceById(resourceId);
+		resource.addFeedback(feedback);
+		feedback.setResource(resource);
+		feedbackService.saveFeedback(feedback);
+	}
+	
+	@GetMapping("/view_feedback/{resourceId}")
+	@PreAuthorize("hasAuthority('resource:read')")
+	public Set<Feedback> viewFeedbacks(@PathVariable("resourceId") Integer resourceId) {
+		Set<Resource> resources = userService.findUserByEmail(JwtTokenVerifier.username).getResources();
+		List<Long> resourcesIds = new ArrayList<>();
+		for (Resource resource : resources) {
+			resourcesIds.add(resource.getId());			
+			resource.setContracts(resource.getContracts().stream()
+					.filter(c -> c.getUser().getEmail().equals(JwtTokenVerifier.username)).collect(Collectors.toSet()));
+		}
+		if(resourcesIds.contains(Long.valueOf(resourceId)))		
+			return resourceService.getResourceById(resourceId).getFeedbacks();
+		
+		//Must Return not OK in HTTP Response
+		return null;
 	}
 
 }

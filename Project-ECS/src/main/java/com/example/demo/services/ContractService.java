@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Contract;
-import com.example.demo.entities.Resource;
 import com.example.demo.repositories.ContractRepository;
 
 @Service
