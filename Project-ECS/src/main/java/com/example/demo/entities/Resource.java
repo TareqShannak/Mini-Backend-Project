@@ -39,8 +39,7 @@ public class Resource {
 	@JsonIgnore
 	private Set<User> users;
 
-	@OneToMany
-	@JsonIgnore
+	@OneToMany(mappedBy = "resource", cascade = CascadeType.ALL, fetch= FetchType.EAGER)
 	private Set<Contract> contracts = new HashSet<Contract>();
 	
 	@OneToMany(mappedBy = "resource", cascade = CascadeType.ALL, fetch= FetchType.EAGER)

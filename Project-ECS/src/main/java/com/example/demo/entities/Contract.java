@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Contract {
@@ -35,10 +36,12 @@ public class Contract {
 
 	@JoinColumn(name = "employee_id")
 	@ManyToOne
+	@JsonIgnore
 	private Resource resource;
 
 	@JoinColumn(name = "customer_id")
 	@ManyToOne
+	@JsonIgnore
 	private User user;
 
 	public Long getId() {

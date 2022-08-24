@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,7 @@ import com.example.demo.entities.Feedback;
 import com.example.demo.entities.Resource;
 import com.example.demo.entities.User;
 import com.example.demo.jwt.JwtTokenVerifier;
+import com.example.demo.services.ContractService;
 import com.example.demo.services.FeedbackService;
 import com.example.demo.services.ResourceService;
 import com.example.demo.services.UserService;
@@ -40,15 +42,19 @@ public class UserController {
 	private ResourceService resourceService;
 
 	@Autowired
+	private ContractService contractService;
+
+	@Autowired
 	private FeedbackService feedbackService;
 	
-	@GetMapping("/resources")
-	@PreAuthorize("hasAuthority('resource:write')")
-	public List<Resource> getAllResources() {
-		return resourceService.allResources();
-	}
+//	Just Testing..
+//	@GetMapping("/resources")
+//	@PreAuthorize("hasAuthority('resource:write')")
+//	public List<Resource> getAllResources() {
+//		return resourceService.allResources();
+//	}
 
-	@GetMapping(path = "/resources/{resourceId}")
+	@GetMapping("/my_resources/{resourceId}")
 	@PreAuthorize("hasAuthority('resource:read')")
 	public Resource getResource(@PathVariable("resourceId") Integer resourceId) {
 		return resourceService.getResourceById(resourceId);
@@ -57,7 +63,12 @@ public class UserController {
 	@GetMapping("/my_resources")
 	@PreAuthorize("hasAuthority('resource:read')")
 	public Set<Resource> getMyResources() {
-		return userService.findUserByEmail(JwtTokenVerifier.username).getResources();
+		Set<Resource> resources = userService.findUserByEmail(JwtTokenVerifier.username).getResources();
+		for (Resource resource : resources) {
+			resource.setContracts(resource.getContracts().stream()
+					.filter(c -> c.getUser().getEmail().equals(JwtTokenVerifier.username)).collect(Collectors.toSet()));
+		}
+		return resources;
 	}
 
 	@GetMapping("/my_current_resources")
@@ -70,7 +81,7 @@ public class UserController {
 			currentResources.add(contract.getResource());
 		return currentResources;
 	}
-	
+
 	@GetMapping("/my_finished_resources")
 	@PreAuthorize("hasAuthority('resource:read')")
 	public List<Resource> getMyFinishedResources() {
@@ -79,6 +90,10 @@ public class UserController {
 		for (Contract contract : contracts.stream().filter(c -> c.getEndDate().before(new Date()))
 				.collect(Collectors.toList()))
 			currentResources.add(contract.getResource());
+		for (Resource resource : currentResources) {
+			resource.setContracts(resource.getContracts().stream()
+					.filter(c -> c.getUser().getEmail().equals(JwtTokenVerifier.username)).collect(Collectors.toSet()));
+		}
 		return currentResources;
 	}
 
@@ -88,13 +103,22 @@ public class UserController {
 		return userService.findUserByEmail(JwtTokenVerifier.username);
 	}
 
-	@PostMapping(path = "/feedback/{resourceId}")
+	@PostMapping("/feedback/{resourceId}")
 	@PreAuthorize("hasAuthority('feedback:write')")
 	public void addFeedback(@PathVariable("resourceId") Integer resourceId, @RequestBody Feedback feedback) {
 		Resource resource = resourceService.getResourceById(resourceId);
 		resource.addFeedback(feedback);
 		feedback.setResource(resource);
 		feedbackService.saveFeedback(feedback);
+	}
+
+	@PutMapping("/my_contracts/{contractId}")
+	@PreAuthorize("hasAuthority('resource:read')")
+	public void editContract(@PathVariable("contractId") Integer contractId, @RequestBody Contract contract) {
+		Contract newContract = contractService.getContractById(contractId);
+		newContract.setPosition(contract.getPosition());
+		newContract.setEndDate(contract.getEndDate());
+		contractService.saveContract(newContract);
 	}
 
 }
