@@ -72,7 +72,7 @@ public class UserController {
 		return resources;
 	}
 
-	@GetMapping("/my_current_resources")
+	@GetMapping("/current_resources")
 	@PreAuthorize("hasAuthority('resource:read')")
 	public List<Resource> getMyCurrentResources() {
 		Set<Contract> contracts = userService.findUserByEmail(JwtTokenVerifier.username).getContracts();
@@ -82,8 +82,8 @@ public class UserController {
 			currentResources.add(contract.getResource());
 		return currentResources;
 	}
-
-	@GetMapping("/my_finished_resources")
+	
+	@GetMapping("/historical_resources")
 	@PreAuthorize("hasAuthority('resource:read')")
 	public List<Resource> getMyFinishedResources() {
 		Set<Contract> contracts = userService.findUserByEmail(JwtTokenVerifier.username).getContracts();
@@ -139,7 +139,7 @@ public class UserController {
 		return null;
 	}
 	
-	@PostMapping("/edit_profile")
+	@PutMapping("/edit_profile")
 	@PreAuthorize("hasAuthority('feedback:write')")
 	public void editUser(@RequestBody User user) {
 		User newUser = userService.findUserByEmail(JwtTokenVerifier.username);
