@@ -34,7 +34,7 @@ public class ManagerController {
 	private UserService userService;
 
 	@GetMapping("/client_resources")
-	@PreAuthorize("hasAuthority('resource:read')")
+	@PreAuthorize("hasAuthority('resource_with_contract:read')")
 	public List<ResourceWithContract> getEmployeesByManager() {
 		Manager manager = managerService.getManagerByEmail(JwtTokenVerifier.username);
 		List<User> users = userService.getUsersByManagerId(manager.getId());

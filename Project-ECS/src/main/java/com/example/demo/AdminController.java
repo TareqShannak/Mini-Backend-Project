@@ -19,7 +19,6 @@ import com.example.demo.services.UserService;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @RestController
-@RequestMapping("api/v1")
 @EnableSwagger2
 @CrossOrigin
 public class AdminController {

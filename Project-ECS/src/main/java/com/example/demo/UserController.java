@@ -45,16 +45,6 @@ public class UserController {
 	@Autowired
 	private ContractService contractService;
 
-	@Autowired
-	private FeedbackService feedbackService;
-	
-//	Just Testing..
-//	@GetMapping("/resources")
-//	@PreAuthorize("hasAuthority('resource:write')")
-//	public List<Resource> getAllResources() {
-//		return resourceService.allResources();
-//	}
-
 	@GetMapping("/my_resources/{resourceId}")
 	@PreAuthorize("hasAuthority('resource:read')")
 	public Resource getResource(@PathVariable("resourceId") Integer resourceId) {
@@ -112,39 +102,6 @@ public class UserController {
 		newContract.setEndDate(contract.getEndDate());
 		contractService.saveContract(newContract);
 	}
-	
-	@PostMapping("/add_feedback/{resourceId}")
-	@PreAuthorize("hasAuthority('feedback:write')")
-	public void addFeedback(@PathVariable("resourceId") Integer resourceId, @RequestBody Feedback feedback) {
-		Resource resource = resourceService.getResourceById(resourceId);
-		resource.addFeedback(feedback);
-		feedback.setResource(resource);
-		feedbackService.saveFeedback(feedback);
-	}
-	
-	@GetMapping("/view_feedback/{resourceId}")
-	@PreAuthorize("hasAuthority('resource:read')")
-	public List<Feedback> viewFeedbacks(@PathVariable("resourceId") Long resourceId) {
-		return feedbackService
-				.getAllFeedbacks()
-				.stream()
-				.filter(f -> f.getResource().getId().equals(resourceId))
-				.collect(Collectors.toList());
-	}
-	
-	@GetMapping("/view_my_feedback/{resourceId}")
-	@PreAuthorize("hasAuthority('resource:read')")
-	public List<Feedback> viewMyFeedbacks(@PathVariable("resourceId") Long resourceId) {
-		
-		Long userId = userService.findUserByEmail(JwtTokenVerifier.username).getId(); 
-		
-		return feedbackService
-				.getAllFeedbacks()
-				.stream()
-				.filter(f -> f.getResource().getId().equals(resourceId) && f.getUser().getId().equals(userId))
-				.collect(Collectors.toList());
-	}
-	
 	
 	@PutMapping("/edit_profile")
 	@PreAuthorize("hasAuthority('feedback:write')")
