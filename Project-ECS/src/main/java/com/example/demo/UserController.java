@@ -124,20 +124,27 @@ public class UserController {
 	
 	@GetMapping("/view_feedback/{resourceId}")
 	@PreAuthorize("hasAuthority('resource:read')")
-	public Set<Feedback> viewFeedbacks(@PathVariable("resourceId") Integer resourceId) {
-		Set<Resource> resources = userService.findUserByEmail(JwtTokenVerifier.username).getResources();
-		List<Long> resourcesIds = new ArrayList<>();
-		for (Resource resource : resources) {
-			resourcesIds.add(resource.getId());			
-			resource.setContracts(resource.getContracts().stream()
-					.filter(c -> c.getUser().getEmail().equals(JwtTokenVerifier.username)).collect(Collectors.toSet()));
-		}
-		if(resourcesIds.contains(Long.valueOf(resourceId)))		
-			return resourceService.getResourceById(resourceId).getFeedbacks();
-		
-		//Must Return not OK in HTTP Response
-		return null;
+	public List<Feedback> viewFeedbacks(@PathVariable("resourceId") Long resourceId) {
+		return feedbackService
+				.getAllFeedbacks()
+				.stream()
+				.filter(f -> f.getResource().getId().equals(resourceId))
+				.collect(Collectors.toList());
 	}
+	
+	@GetMapping("/view_my_feedback/{resourceId}")
+	@PreAuthorize("hasAuthority('resource:read')")
+	public List<Feedback> viewMyFeedbacks(@PathVariable("resourceId") Long resourceId) {
+		
+		Long userId = userService.findUserByEmail(JwtTokenVerifier.username).getId(); 
+		
+		return feedbackService
+				.getAllFeedbacks()
+				.stream()
+				.filter(f -> f.getResource().getId().equals(resourceId) && f.getUser().getId().equals(userId))
+				.collect(Collectors.toList());
+	}
+	
 	
 	@PutMapping("/edit_profile")
 	@PreAuthorize("hasAuthority('feedback:write')")

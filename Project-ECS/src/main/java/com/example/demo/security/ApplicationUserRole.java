@@ -15,6 +15,7 @@ import com.google.common.collect.Sets;
 
 public enum ApplicationUserRole {
 	USER(Sets.newHashSet(RESOURCE_READ, FEEDBACK_WRITE)),
+	MANAGER(Sets.newHashSet(RESOURCE_READ, FEEDBACK_WRITE)),
 	ADMIN(Sets.newHashSet(RESOURCE_READ, RESOURCE_WRITE, USER_READ, USER_WRITE));
 	
 	private final Set<ApplicationUserPermission> permissions;

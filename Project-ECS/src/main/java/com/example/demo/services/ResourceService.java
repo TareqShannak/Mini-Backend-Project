@@ -21,9 +21,5 @@ public class ResourceService {
 	public Resource getResourceById(Integer id) {
 		return resourceRepository.findById(id.longValue()).get();
 	}
-
-	public List<Resource> retrieveMyResources(String email) {
-		return resourceRepository.findByEmail(email);
-	}
-
+	
 }

@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -39,10 +40,10 @@ public class User {
 
 	@Column(name = "company_name", length = 20, nullable = false)
 	private String companyName;
-	
+
 	@Temporal(TemporalType.DATE)
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date contractDate;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -50,9 +51,18 @@ public class User {
 	@JsonIgnore
 	private Set<Resource> resources;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<Contract> contracts;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
+	private Set<Feedback> feedbacks = new HashSet<Feedback>();
+
+	@JoinColumn(name = "manager_id")
+	@ManyToOne
+	@JsonIgnore
+	private Manager manager;
 
 	public User() {
 		super();
@@ -129,6 +139,30 @@ public class User {
 				resources = new HashSet<Resource>();
 			resource.addUser(this);
 			resources.add(resource);
+		}
+	}
+
+	public Set<Feedback> getFeedbacks() {
+		return feedbacks;
+	}
+
+	public void setFeedbacks(Set<Feedback> feedbacks) {
+		this.feedbacks = feedbacks;
+	}
+
+	public Manager getManager() {
+		return manager;
+	}
+
+	public void setManager(Manager manager) {
+		this.manager = manager;
+	}
+
+	public void addFeedback(Feedback feedback) {
+		if (feedback != null) {
+			if (feedbacks == null)
+				feedbacks = new HashSet<Feedback>();
+			feedbacks.add(feedback);
 		}
 	}
 

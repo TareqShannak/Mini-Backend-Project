@@ -34,6 +34,11 @@ public class Feedback {
 	@JoinColumn(name = "employee_id")
 	@JsonIgnore
 	private Resource resource;
+	
+	@ManyToOne
+	@JoinColumn(name = "customer_id")
+	@JsonIgnore
+	private User user;
 
 	public Feedback() {
 		super();
@@ -78,6 +83,14 @@ public class Feedback {
 
 	public void setPublishedDate(Date publishedDate) {
 		this.publishedDate = publishedDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

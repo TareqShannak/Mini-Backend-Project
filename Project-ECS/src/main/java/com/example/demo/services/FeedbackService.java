@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,10 @@ public class FeedbackService {
 	
 	public void saveFeedback(Feedback feedback) {
 		feedbackRepository.save(feedback);
+	}
+	
+	public List<Feedback> getAllFeedbacks() {
+		return feedbackRepository.findAll();
 	}
 
 }
