@@ -22,4 +22,8 @@ public class ResourceService {
 		return resourceRepository.findById(id.longValue()).get();
 	}
 	
+	public void deleteResourceById(Long id) {
+		resourceRepository.deleteById(id);
+	}
+	
 }

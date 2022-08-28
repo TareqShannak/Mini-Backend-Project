@@ -9,5 +9,7 @@ import org.springframework.data.repository.query.Param;
 import com.example.demo.entities.Resource;
 
 public interface ResourceRepository extends JpaRepository<Resource, Long> {
+	
+	void deleteById(long id);
 
 }

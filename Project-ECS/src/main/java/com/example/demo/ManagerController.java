@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.data.ResourceWithContract;
 import com.example.demo.entities.Contract;
 import com.example.demo.entities.Manager;
-import com.example.demo.entities.Resource;
 import com.example.demo.entities.User;
 import com.example.demo.jwt.JwtTokenVerifier;
 import com.example.demo.services.ManagerService;
@@ -42,8 +42,9 @@ public class ManagerController {
 		for (User user : users)
 			for (Contract contract : user.getContracts().stream().filter(c -> c.getEndDate().after(new Date()))
 					.collect(Collectors.toList()))
-				resources.add(new ResourceWithContract(contract.getResource().getEmail(), user.getCompanyName(),
+				resources.add(new ResourceWithContract(contract.getResource().getId(), contract.getResource().getEmail(), user.getCompanyName(),
 						contract.getPosition(), contract.getResource().getHireDate()));
+		Collections.sort(resources, ResourceWithContract.idComparator);
 		return resources;
 	}
 

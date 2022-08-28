@@ -1,5 +1,6 @@
 package com.example.demo.data;
 
+import java.util.Comparator;
 import java.util.Date;
 
 import javax.persistence.Temporal;
@@ -9,14 +10,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ResourceWithContract {
 
+	private long id;
+
 	private String resourceName;
 
 	private String companyName;
 
 	private String position;
-	
+
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date hireDate;
 
 	public ResourceWithContract() {
@@ -24,12 +27,21 @@ public class ResourceWithContract {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResourceWithContract(String resourceName, String companyName, String position, Date hireDate) {
+	public ResourceWithContract(long id, String resourceName, String companyName, String position, Date hireDate) {
 		super();
+		this.id = id;
 		this.resourceName = resourceName;
 		this.companyName = companyName;
 		this.position = position;
 		this.hireDate = hireDate;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getResourceName() {
@@ -63,6 +75,16 @@ public class ResourceWithContract {
 	public void setHireDate(Date hireDate) {
 		this.hireDate = hireDate;
 	}
+	
+	public static Comparator<ResourceWithContract> idComparator = new Comparator<ResourceWithContract>() {
+
+		public int compare(ResourceWithContract s1, ResourceWithContract s2) {
+		   long id1 = s1.getId();
+		   long id2 = s2.getId();
+
+		   //ascending order
+		   return Long.compare(id1, id2);
+	    }};
 
 	@Override
 	public String toString() {

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entities.Feedback;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
 
@@ -41,6 +40,10 @@ public class UserService {
 	
 	public void deleteUserById(Long id) {
 		userRepository.deleteById(id);
+	}
+	
+	public void deleteUser(User user) {
+		userRepository.delete(user);
 	}
 	
 	public List<User> getUsersByManagerId(Long managerId) {

@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.example.demo.data.ResourceWithContract;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -120,6 +122,16 @@ public class Resource {
 	public void setFeedbacks(Set<Feedback> feedbacks) {
 		this.feedbacks = feedbacks;
 	}
+	
+	public static Comparator<Resource> idComparator = new Comparator<Resource>() {
+
+		public int compare(Resource s1, Resource s2) {
+		   long id1 = s1.getId();
+		   long id2 = s2.getId();
+
+		   //ascending order
+		   return Long.compare(id1, id2);
+	    }};
 
 	@Override
 	public String toString() {

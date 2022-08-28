@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -24,7 +25,6 @@ import com.example.demo.entities.Resource;
 import com.example.demo.entities.User;
 import com.example.demo.jwt.JwtTokenVerifier;
 import com.example.demo.services.ContractService;
-import com.example.demo.services.FeedbackService;
 import com.example.demo.services.ResourceService;
 import com.example.demo.services.UserService;
 
@@ -53,12 +53,13 @@ public class UserController {
 
 	@GetMapping("/my_resources")
 	@PreAuthorize("hasAuthority('resource:read')")
-	public Set<Resource> getMyResources() {
-		Set<Resource> resources = userService.findUserByEmail(JwtTokenVerifier.username).getResources();
+	public List<Resource> getMyResources() {
+		List<Resource> resources = userService.findUserByEmail(JwtTokenVerifier.username).getResources().stream().collect(Collectors.toList());
 		for (Resource resource : resources) {
 			resource.setContracts(resource.getContracts().stream()
 					.filter(c -> c.getUser().getEmail().equals(JwtTokenVerifier.username)).collect(Collectors.toSet()));
 		}
+		Collections.sort(resources, Resource.idComparator);
 		return resources;
 	}
 
@@ -70,6 +71,7 @@ public class UserController {
 		for (Contract contract : contracts.stream().filter(c -> c.getEndDate().after(new Date()))
 				.collect(Collectors.toList()))
 			currentResources.add(contract.getResource());
+		Collections.sort(currentResources, Resource.idComparator);
 		return currentResources;
 	}
 	
@@ -85,6 +87,7 @@ public class UserController {
 			resource.setContracts(resource.getContracts().stream()
 					.filter(c -> c.getUser().getEmail().equals(JwtTokenVerifier.username)).collect(Collectors.toSet()));
 		}
+		Collections.sort(currentResources, Resource.idComparator);
 		return currentResources;
 	}
 
