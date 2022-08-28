@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.example.demo.security.ApplicationUserRole;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Jwts;
@@ -64,10 +65,17 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 				.signWith(secretKey)
 				.compact();
 		response.setHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
+		
+		String person = "";
+		if(authResult.getAuthorities().toString().equals(ApplicationUserRole.USER.getGrantedAuthorities().toString()))
+			person = "Client";
+		else
+			person = "Manager";
 
 		// Send Body
 		String objectToReturn = "{ "
-								+ "\"tokens\" : \"" + jwtConfig.getTokenPrefix() + token + "\""
+								+ "\"tokens\" : \"" + jwtConfig.getTokenPrefix() + token + "\", "
+								+ "\"rank\" : \"" + person + "\""
 								+ " }";
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
