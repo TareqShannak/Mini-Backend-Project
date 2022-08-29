@@ -1,14 +1,10 @@
 package com.example.demo;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,23 +99,6 @@ public class UserController {
 	public void editContract(@PathVariable("contractId") Integer contractId, @RequestBody Contract contract) {
 		Contract newContract = contractService.getContractById(contractId);
 		newContract.setPosition(contract.getPosition());
-		System.out.println(contract.getEndDate());
-
-//		DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-//		utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-//
-//		Date date = null;
-//		try {
-//			date = utcFormat.parse(contract.getEndDate().toString());
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
-//
-//		DateFormat pstFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-//		pstFormat.setTimeZone(TimeZone.getTimeZone("PST"));
-//
-//		System.out.println(pstFormat.format(date));
-		
 		newContract.setEndDate(contract.getEndDate());
 		contractService.saveContract(newContract);
 	}

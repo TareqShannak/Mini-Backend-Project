@@ -1,7 +1,5 @@
 package com.example.demo.entities;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -31,7 +29,7 @@ public class Resource {
 	private String email;
 	
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Kolkata")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Hebron")
 	private Date hireDate;
 
 	@ManyToMany(mappedBy = "resources", fetch = FetchType.EAGER)

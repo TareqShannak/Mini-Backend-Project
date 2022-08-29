@@ -1,7 +1,5 @@
 package com.example.demo.entities;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -26,7 +24,7 @@ public class Feedback {
 	private String text;
 
 	@CreationTimestamp
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Kolkata")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Hebron")
 	private Date publishedDate;
 
 	@ManyToOne
@@ -41,7 +39,6 @@ public class Feedback {
 
 	public Feedback() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Feedback(Long id, String text, Date publishedDate, Resource resource) {

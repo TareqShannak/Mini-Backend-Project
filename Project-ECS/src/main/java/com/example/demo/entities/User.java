@@ -1,7 +1,5 @@
 package com.example.demo.entities;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,7 +40,7 @@ public class User {
 	private String companyName;
 
 	@CreationTimestamp
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Kolkata")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Hebron")
 	private Date contractDate;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

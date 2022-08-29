@@ -16,7 +16,7 @@ public class ResourceWithContract {
 
 	private String position;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Kolkata")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Hebron")
 	private Date hireDate;
 
 	public ResourceWithContract() {
