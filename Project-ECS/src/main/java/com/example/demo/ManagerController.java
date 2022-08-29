@@ -20,11 +20,8 @@ import com.example.demo.jwt.JwtTokenVerifier;
 import com.example.demo.services.ManagerService;
 import com.example.demo.services.UserService;
 
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
 @RestController
 @RequestMapping("api/v1")
-@EnableSwagger2
 public class ManagerController {
 
 	@Autowired
