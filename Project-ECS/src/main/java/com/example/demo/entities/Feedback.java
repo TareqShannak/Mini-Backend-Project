@@ -1,6 +1,8 @@
 package com.example.demo.entities;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -26,8 +26,8 @@ public class Feedback {
 	private String text;
 
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd")
-	private LocalDate publishedDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Kolkata")
+	private Date publishedDate;
 
 	@ManyToOne
 	@JoinColumn(name = "employee_id")
@@ -44,7 +44,7 @@ public class Feedback {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Feedback(Long id, String text, LocalDate publishedDate, Resource resource) {
+	public Feedback(Long id, String text, Date publishedDate, Resource resource) {
 		super();
 		this.id = id;
 		this.text = text;
@@ -76,11 +76,11 @@ public class Feedback {
 		this.resource = resource;
 	}
 
-	public LocalDate getPublishedDate() {
+	public Date getPublishedDate() {
 		return publishedDate;
 	}
 
-	public void setPublishedDate(LocalDate publishedDate) {
+	public void setPublishedDate(Date publishedDate) {
 		this.publishedDate = publishedDate;
 	}
 

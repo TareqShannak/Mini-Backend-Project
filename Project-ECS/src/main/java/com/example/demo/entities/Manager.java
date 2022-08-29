@@ -39,7 +39,6 @@ public class Manager {
 
 	public Manager() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Manager(Long id, String name, String email, String password) {

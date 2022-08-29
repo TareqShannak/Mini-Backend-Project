@@ -1,10 +1,8 @@
 package com.example.demo.data;
 
-import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.Date;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -18,16 +16,14 @@ public class ResourceWithContract {
 
 	private String position;
 
-	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate hireDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Kolkata")
+	private Date hireDate;
 
 	public ResourceWithContract() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public ResourceWithContract(long id, String resourceName, String companyName, String position, LocalDate hireDate) {
+	public ResourceWithContract(long id, String resourceName, String companyName, String position, Date hireDate) {
 		super();
 		this.id = id;
 		this.resourceName = resourceName;
@@ -68,11 +64,11 @@ public class ResourceWithContract {
 		this.position = position;
 	}
 
-	public LocalDate getHireDate() {
+	public Date getHireDate() {
 		return hireDate;
 	}
 
-	public void setHireDate(LocalDate hireDate) {
+	public void setHireDate(Date hireDate) {
 		this.hireDate = hireDate;
 	}
 	

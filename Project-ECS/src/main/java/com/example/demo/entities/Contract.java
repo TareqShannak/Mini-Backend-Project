@@ -1,6 +1,8 @@
 package com.example.demo.entities;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,12 +27,13 @@ public class Contract {
 
 	private String position;
 
+	
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Kolkata")
 	private LocalDate startDate;
 
-	@JsonFormat(pattern="yyyy-MM-dd")
-	private LocalDate endDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Kolkata")
+	private Date endDate;
 
 	@JoinColumn(name = "employee_id")
 	@ManyToOne
@@ -62,15 +65,17 @@ public class Contract {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate.toInstant()
+			      .atZone(ZoneId.systemDefault())
+			      .toLocalDate();
 	}
 
-	public LocalDate getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(LocalDate endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 

@@ -1,27 +1,27 @@
 package com.example.demo;
 
-import java.time.LocalDate;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entities.Contract;
-import com.example.demo.entities.Feedback;
 import com.example.demo.entities.Resource;
 import com.example.demo.entities.User;
 import com.example.demo.jwt.JwtTokenVerifier;
@@ -69,7 +69,7 @@ public class UserController {
 	public List<Resource> getMyCurrentResources() {
 		Set<Contract> contracts = userService.findUserByEmail(JwtTokenVerifier.username).getContracts();
 		List<Resource> currentResources = new ArrayList<>();
-		for (Contract contract : contracts.stream().filter(c -> c.getEndDate().isAfter(LocalDate.now()))
+		for (Contract contract : contracts.stream().filter(c -> c.getEndDate().after(new Date()))
 				.collect(Collectors.toList()))
 			currentResources.add(contract.getResource());
 		Collections.sort(currentResources, Resource.idComparator);
@@ -81,7 +81,7 @@ public class UserController {
 	public List<Resource> getMyFinishedResources() {
 		Set<Contract> contracts = userService.findUserByEmail(JwtTokenVerifier.username).getContracts();
 		List<Resource> currentResources = new ArrayList<>();
-		for (Contract contract : contracts.stream().filter(c -> c.getEndDate().isBefore(LocalDate.now()))
+		for (Contract contract : contracts.stream().filter(c -> c.getEndDate().before(new Date()))
 				.collect(Collectors.toList()))
 			currentResources.add(contract.getResource());
 		for (Resource resource : currentResources) {
@@ -103,6 +103,23 @@ public class UserController {
 	public void editContract(@PathVariable("contractId") Integer contractId, @RequestBody Contract contract) {
 		Contract newContract = contractService.getContractById(contractId);
 		newContract.setPosition(contract.getPosition());
+		System.out.println(contract.getEndDate());
+
+//		DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+//		utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+//
+//		Date date = null;
+//		try {
+//			date = utcFormat.parse(contract.getEndDate().toString());
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//
+//		DateFormat pstFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+//		pstFormat.setTimeZone(TimeZone.getTimeZone("PST"));
+//
+//		System.out.println(pstFormat.format(date));
+		
 		newContract.setEndDate(contract.getEndDate());
 		contractService.saveContract(newContract);
 	}

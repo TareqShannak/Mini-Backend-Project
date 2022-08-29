@@ -1,7 +1,9 @@
 package com.example.demo.entities;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,10 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import com.example.demo.data.ResourceWithContract;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,10 +30,9 @@ public class Resource {
 
 	private String email;
 	
-	// TODO: Fix "@JsonFormat set date with one day less"
 
-	@JsonFormat(pattern="yyyy-MM-dd")
-	private LocalDate hireDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Kolkata")
+	private Date hireDate;
 
 	@ManyToMany(mappedBy = "resources", fetch = FetchType.EAGER)
 	@JsonIgnore
@@ -51,7 +49,7 @@ public class Resource {
 		super();
 	}
 
-	public Resource(Long id, String email, LocalDate hireDate) {
+	public Resource(Long id, String email, Date hireDate) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -74,11 +72,11 @@ public class Resource {
 		this.email = email;
 	}
 
-	public LocalDate getHireDate() {
+	public Date getHireDate() {
 		return hireDate;
 	}
 
-	public void setHireDate(LocalDate hireDate) {
+	public void setHireDate(Date hireDate) {
 		this.hireDate = hireDate;
 	}
 

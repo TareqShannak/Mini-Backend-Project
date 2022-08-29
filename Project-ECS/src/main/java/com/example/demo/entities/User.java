@@ -1,6 +1,8 @@
 package com.example.demo.entities;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,8 +19,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -42,8 +42,8 @@ public class User {
 	private String companyName;
 
 	@CreationTimestamp
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate contractDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Kolkata")
+	private Date contractDate;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "customers_employees", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
@@ -67,7 +67,7 @@ public class User {
 		super();
 	}
 
-	public User(Long id, String email, String password, String companyName, LocalDate contractDate) {
+	public User(Long id, String email, String password, String companyName, Date contractDate) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -108,11 +108,11 @@ public class User {
 		this.companyName = companyName;
 	}
 
-	public LocalDate getContractDate() {
+	public Date getContractDate() {
 		return contractDate;
 	}
 
-	public void setContractDate(LocalDate contractDate) {
+	public void setContractDate(Date contractDate) {
 		this.contractDate = contractDate;
 	}
 
