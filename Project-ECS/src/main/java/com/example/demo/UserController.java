@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -68,7 +69,7 @@ public class UserController {
 	public List<Resource> getMyCurrentResources() {
 		Set<Contract> contracts = userService.findUserByEmail(JwtTokenVerifier.username).getContracts();
 		List<Resource> currentResources = new ArrayList<>();
-		for (Contract contract : contracts.stream().filter(c -> c.getEndDate().after(new Date()))
+		for (Contract contract : contracts.stream().filter(c -> c.getEndDate().isAfter(LocalDate.now()))
 				.collect(Collectors.toList()))
 			currentResources.add(contract.getResource());
 		Collections.sort(currentResources, Resource.idComparator);
@@ -80,7 +81,7 @@ public class UserController {
 	public List<Resource> getMyFinishedResources() {
 		Set<Contract> contracts = userService.findUserByEmail(JwtTokenVerifier.username).getContracts();
 		List<Resource> currentResources = new ArrayList<>();
-		for (Contract contract : contracts.stream().filter(c -> c.getEndDate().before(new Date()))
+		for (Contract contract : contracts.stream().filter(c -> c.getEndDate().isBefore(LocalDate.now()))
 				.collect(Collectors.toList()))
 			currentResources.add(contract.getResource());
 		for (Resource resource : currentResources) {

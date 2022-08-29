@@ -1,6 +1,6 @@
 package com.example.demo.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +16,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,10 +41,9 @@ public class User {
 	@Column(name = "company_name", length = 20, nullable = false)
 	private String companyName;
 
-	@Temporal(TemporalType.DATE)
 	@CreationTimestamp
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date contractDate;
+	private LocalDate contractDate;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "customers_employees", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
@@ -69,7 +67,7 @@ public class User {
 		super();
 	}
 
-	public User(Long id, String email, String password, String companyName, Date contractDate) {
+	public User(Long id, String email, String password, String companyName, LocalDate contractDate) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -110,11 +108,11 @@ public class User {
 		this.companyName = companyName;
 	}
 
-	public Date getContractDate() {
+	public LocalDate getContractDate() {
 		return contractDate;
 	}
 
-	public void setContractDate(Date contractDate) {
+	public void setContractDate(LocalDate contractDate) {
 		this.contractDate = contractDate;
 	}
 

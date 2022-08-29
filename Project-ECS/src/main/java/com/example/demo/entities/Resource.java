@@ -1,7 +1,7 @@
 package com.example.demo.entities;
 
+import java.time.LocalDate;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,9 +33,8 @@ public class Resource {
 	
 	// TODO: Fix "@JsonFormat set date with one day less"
 
-	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date hireDate;
+	private LocalDate hireDate;
 
 	@ManyToMany(mappedBy = "resources", fetch = FetchType.EAGER)
 	@JsonIgnore
@@ -52,7 +51,7 @@ public class Resource {
 		super();
 	}
 
-	public Resource(Long id, String email, Date hireDate) {
+	public Resource(Long id, String email, LocalDate hireDate) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -75,11 +74,11 @@ public class Resource {
 		this.email = email;
 	}
 
-	public Date getHireDate() {
+	public LocalDate getHireDate() {
 		return hireDate;
 	}
 
-	public void setHireDate(Date hireDate) {
+	public void setHireDate(LocalDate hireDate) {
 		this.hireDate = hireDate;
 	}
 

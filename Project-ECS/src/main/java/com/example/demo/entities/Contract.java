@@ -1,6 +1,6 @@
 package com.example.demo.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,14 +25,12 @@ public class Contract {
 
 	private String position;
 
-	@Temporal(TemporalType.DATE)
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date startDate;
+	private LocalDate startDate;
 
-	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date endDate;
+	private LocalDate endDate;
 
 	@JoinColumn(name = "employee_id")
 	@ManyToOne
@@ -60,19 +58,19 @@ public class Contract {
 		this.position = position;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 

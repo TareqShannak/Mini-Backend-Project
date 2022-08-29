@@ -1,7 +1,7 @@
 package com.example.demo.data;
 
+import java.time.LocalDate;
 import java.util.Comparator;
-import java.util.Date;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,14 +20,14 @@ public class ResourceWithContract {
 
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date hireDate;
+	private LocalDate hireDate;
 
 	public ResourceWithContract() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResourceWithContract(long id, String resourceName, String companyName, String position, Date hireDate) {
+	public ResourceWithContract(long id, String resourceName, String companyName, String position, LocalDate hireDate) {
 		super();
 		this.id = id;
 		this.resourceName = resourceName;
@@ -68,11 +68,11 @@ public class ResourceWithContract {
 		this.position = position;
 	}
 
-	public Date getHireDate() {
+	public LocalDate getHireDate() {
 		return hireDate;
 	}
 
-	public void setHireDate(Date hireDate) {
+	public void setHireDate(LocalDate hireDate) {
 		this.hireDate = hireDate;
 	}
 	

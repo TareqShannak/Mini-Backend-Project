@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -40,7 +41,7 @@ public class ManagerController {
 		List<User> users = userService.getUsersByManagerId(manager.getId());
 		List<ResourceWithContract> resources = new ArrayList<>();
 		for (User user : users)
-			for (Contract contract : user.getContracts().stream().filter(c -> c.getEndDate().after(new Date()))
+			for (Contract contract : user.getContracts().stream().filter(c -> c.getEndDate().isAfter(LocalDate.now()))
 					.collect(Collectors.toList()))
 				resources.add(new ResourceWithContract(contract.getResource().getId(), contract.getResource().getEmail(), user.getCompanyName(),
 						contract.getPosition(), contract.getResource().getHireDate()));

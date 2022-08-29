@@ -1,6 +1,6 @@
 package com.example.demo.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,10 +25,9 @@ public class Feedback {
 
 	private String text;
 
-	@Temporal(TemporalType.DATE)
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date publishedDate;
+	private LocalDate publishedDate;
 
 	@ManyToOne
 	@JoinColumn(name = "employee_id")
@@ -45,7 +44,7 @@ public class Feedback {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Feedback(Long id, String text, Date publishedDate, Resource resource) {
+	public Feedback(Long id, String text, LocalDate publishedDate, Resource resource) {
 		super();
 		this.id = id;
 		this.text = text;
@@ -77,11 +76,11 @@ public class Feedback {
 		this.resource = resource;
 	}
 
-	public Date getPublishedDate() {
+	public LocalDate getPublishedDate() {
 		return publishedDate;
 	}
 
-	public void setPublishedDate(Date publishedDate) {
+	public void setPublishedDate(LocalDate publishedDate) {
 		this.publishedDate = publishedDate;
 	}
 
