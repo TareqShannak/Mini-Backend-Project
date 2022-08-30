@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import com.example.demo.entities.Request;
 import com.example.demo.entities.Resource;
 import com.example.demo.entities.User;
 import com.example.demo.jwt.JwtTokenVerifier;
+import com.example.demo.repositories.RequestRepository;
 import com.example.demo.services.ContractService;
 import com.example.demo.services.ManagerService;
 import com.example.demo.services.RequestService;
@@ -72,9 +74,10 @@ public class ManagerController {
 		return companyNames;
 	}
 	
-	@PostMapping("/add_resource/{companyName}")
+	@PostMapping("/accept_request/{requestId}")
 	@PreAuthorize("hasAuthority('resource_with_contract:read')")
-	public void addResource(@PathVariable(name = "companyName") String companyName, @RequestBody Resource newResource) {
+	public void addResource(@PathVariable(name = "requestId") Long requestId, @RequestBody Resource newResource) {
+		String companyName = requestService.getRequestById(requestId).getUser().getCompanyName();
 		User customer = userService.getUserByCompanyName(companyName);
 		Contract newContract = newResource.getContracts().iterator().next();
 		
@@ -105,11 +108,16 @@ public class ManagerController {
 	public List<Request> getMyRequests(){
 		Manager manager = managerService.getManagerByEmail(JwtTokenVerifier.username);
 		List<User> users = userService.getUsersByManagerId(manager.getId());
-		System.out.println(users);
 		List<Request> requests =new ArrayList<>();
 		for (User user : users)
 			requests.addAll(requestService.getAllRequests().stream().filter(r -> r.getUser().equals(user)).collect(Collectors.toList()));
 		return requests;
+	}
+	
+	@DeleteMapping("/delete_request/{requestId}")
+	@PreAuthorize("hasAuthority('resource_with_contract:read')")
+	public void deleteRequest(@PathVariable(name = "requestId") Long requestId) {
+		requestService.deleteRequestById(requestId);
 	}
 
 }

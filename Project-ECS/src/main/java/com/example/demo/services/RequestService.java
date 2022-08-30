@@ -21,4 +21,12 @@ public class RequestService {
 	public List<Request> getAllRequests(){
 		return requestRepository.findAll();
 	}
+	
+	public Request getRequestById(Long requestId) {
+		return requestRepository.findById(requestId).get();
+	}
+	
+	public void deleteRequestById(Long requestId) {
+		requestRepository.deleteById(requestId);
+	}
 }
