@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.data.ResourceWithContract;
 import com.example.demo.entities.Contract;
 import com.example.demo.entities.Manager;
+import com.example.demo.entities.Request;
 import com.example.demo.entities.Resource;
 import com.example.demo.entities.User;
 import com.example.demo.jwt.JwtTokenVerifier;
 import com.example.demo.services.ContractService;
 import com.example.demo.services.ManagerService;
+import com.example.demo.services.RequestService;
 import com.example.demo.services.ResourceService;
 import com.example.demo.services.UserService;
 
@@ -41,6 +43,9 @@ public class ManagerController {
 	
 	@Autowired
 	private ContractService contractService;
+	
+	@Autowired
+	private RequestService requestService;
 
 	@GetMapping("/client_resources")
 	@PreAuthorize("hasAuthority('resource_with_contract:read')")
@@ -83,7 +88,28 @@ public class ManagerController {
 		newContract.setResource(newResource);
 		newContract.setUser(customer);
 		contractService.saveContract(newContract);
-		
+	}
+	
+	@GetMapping("/free_resources")
+	@PreAuthorize("hasAuthority('resource_with_contract:read')")
+	public List<Resource> getFreeResources() {
+		List<Resource> resources = resourceService.getAllResources();
+		for (Resource resource : resources) {
+			resource.setContracts(resource.getContracts().stream().filter(c -> c.getEndDate().after(new Date())).collect(Collectors.toSet()));
+		}
+		return resources.stream().filter(r -> r.getContracts().size()==0).collect(Collectors.toList());
+	}
+	
+	@GetMapping("/view_requests")
+	@PreAuthorize("hasAuthority('resource_with_contract:read')")
+	public List<Request> getMyRequests(){
+		Manager manager = managerService.getManagerByEmail(JwtTokenVerifier.username);
+		List<User> users = userService.getUsersByManagerId(manager.getId());
+		System.out.println(users);
+		List<Request> requests =new ArrayList<>();
+		for (User user : users)
+			requests.addAll(requestService.getAllRequests().stream().filter(r -> r.getUser().equals(user)).collect(Collectors.toList()));
+		return requests;
 	}
 
 }

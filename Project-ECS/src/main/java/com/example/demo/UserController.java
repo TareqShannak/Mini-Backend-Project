@@ -11,16 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entities.Contract;
+import com.example.demo.entities.Request;
 import com.example.demo.entities.Resource;
 import com.example.demo.entities.User;
 import com.example.demo.jwt.JwtTokenVerifier;
 import com.example.demo.services.ContractService;
+import com.example.demo.services.RequestService;
 import com.example.demo.services.ResourceService;
 import com.example.demo.services.UserService;
 
@@ -36,6 +39,9 @@ public class UserController {
 
 	@Autowired
 	private ContractService contractService;
+	
+	@Autowired
+	private RequestService requestService;
 
 	@GetMapping("/my_resources/{resourceId}")
 	@PreAuthorize("hasAuthority('resource:read')")
@@ -107,5 +113,10 @@ public class UserController {
 		userService.saveUser(newUser);	
 	}
 	
-	
+	@PostMapping("/request_resource")
+	@PreAuthorize("hasAuthority('feedback:write')")
+	public void requestNewResource(@RequestBody Request request) {
+		request.setUser(getUserInfo());
+		requestService.saveRequest(request);
+	}
 }

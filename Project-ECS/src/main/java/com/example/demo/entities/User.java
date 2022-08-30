@@ -55,6 +55,10 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<Feedback> feedbacks = new HashSet<Feedback>();
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Set<Request> requests = new HashSet<Request>();
 
 	@JoinColumn(name = "manager_id")
 	@ManyToOne
@@ -128,6 +132,22 @@ public class User {
 
 	public void setContracts(Set<Contract> contracts) {
 		this.contracts = contracts;
+	}
+
+	public Set<Request> getRequests() {
+		return requests;
+	}
+
+	public void setRequests(Set<Request> requests) {
+		this.requests = requests;
+	}
+	
+	public void addRequest(Request request) {
+		if (request != null) {
+			if (requests == null)
+				requests = new HashSet<Request>();
+			requests.add(request);
+		}
 	}
 
 	public void addResource(Resource resource) {

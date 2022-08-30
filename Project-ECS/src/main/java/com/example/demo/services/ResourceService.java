@@ -14,7 +14,7 @@ public class ResourceService {
 	@Autowired
 	ResourceRepository resourceRepository;
 
-	public List<Resource> allResources() {
+	public List<Resource> getAllResources() {
 		return resourceRepository.findAll();
 	}
 
