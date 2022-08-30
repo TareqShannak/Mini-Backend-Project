@@ -7,6 +7,9 @@ import com.example.demo.entities.Resource;
 
 public interface ResourceRepository extends JpaRepository<Resource, Long> {
 	
-	void deleteById(long id);
+	public void deleteById(long id);
+	
+	public Resource findByEmail(String email);
+	
 
 }

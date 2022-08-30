@@ -49,4 +49,8 @@ public class UserService {
 	public List<User> getUsersByManagerId(Long managerId) {
 		return userRepository.findByManagerId(managerId);
 	}
+	
+	public User getUserByCompanyName(String companyName) {
+		return userRepository.findByCompanyName(companyName);
+	}
 }

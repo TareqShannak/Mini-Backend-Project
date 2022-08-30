@@ -22,8 +22,15 @@ public class ResourceService {
 		return resourceRepository.findById(id.longValue()).get();
 	}
 	
+	public Resource getResourceByEmail(String email) {
+		return resourceRepository.findByEmail(email);
+	}
 	public void deleteResourceById(Long id) {
 		resourceRepository.deleteById(id);
+	}
+	
+	public void saveResource(Resource resource) {
+		resourceRepository.save(resource);
 	}
 	
 }

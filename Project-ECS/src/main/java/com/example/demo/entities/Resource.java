@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,6 +31,7 @@ public class Resource {
 	private String email;
 	
 
+	@CreationTimestamp
 	@JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Hebron")
 	private Date hireDate;
 
